@@ -2,7 +2,7 @@
 
 include("config.php");
 require_once("functions.php");
-require_once("sample_list.php");
+//require_once("sample_list.php");
 
 $type = trim(strip_tags($_POST['type']));
 $type = $type == "movies" ? 1 : 2;
@@ -34,6 +34,9 @@ foreach ($films as $key=>$value) {
 	$nfilms[$key] = $temp;
 }
 $recommendations = getRecommendations($nfilms, $_COOKIE["email"]);
+
+$finalReturn = array();
+
 foreach ($recommendations as $k=>$v) {
 	$returnSet["movie"] = $k;
 	$returnSet["score"] = $v;

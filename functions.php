@@ -16,12 +16,12 @@
     }
     
     
-    function matchItems($preferences, $person) {
+    /*function matchItems($preferences, $person) {
         $score = array();
         foreach($preferences as $otherPerson=>$values){
             if($otherPerson !== $person){
-                $dist = similarityDistance($preferences, $person, $otherPerson);
-                if($dist > 0)
+                $sim = similarityDistance($preferences, $person, $otherPerson);
+                if($sim > 0)
                     $score[$otherPerson] = $sim;
             }
         }
@@ -38,21 +38,21 @@
             }
         }
         return $result;
-    }
+    }*/
     
     
     function getRecommendations($preferences, $person) {
         $total = array();
         $simSums = array();
         $ranks = array();
-        $dist = 0;
+        $sim = 0;
         
         foreach($preferences as $otherPerson=>$values) {
             if($otherPerson != $person) {
-                $dist = similarityDistance($preferences, $person, $otherPerson);
+                $sim = similarityDistance($preferences, $person, $otherPerson);
             }
             
-            if($dist > 0) {
+            if($sim > 0) {
                 foreach($preferences[$otherPerson] as $key=>$value) {
                     if(!array_key_exists($key, $preferences[$person])) {
                         if(!array_key_exists($key, $total)) {

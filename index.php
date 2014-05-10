@@ -65,6 +65,10 @@
 	<input type="hidden" id="movieTyped" />
 	<input type="hidden" id="actorTyped" />
 
+	<div id="movieInfo">
+		
+	</div>
+
 <?php } else { ?>
 	Sign In to continue
 <?php } ?>	
@@ -127,13 +131,23 @@
 			});			
 
 			$(document).on('click', ".movieBox", function(){
-				console.log($(this).attr("id").replace("item-",""));
+				var itemid = $(this).attr("id").replace("item-","");
+
+				$.post("aj_getmovie.php", {id:itemid}, function(data){
+					
+					$("#movieInfo").html(data);
+
+				});				
+
 			});
 
 			$(document).on('click', "#movieReco", function(){
 				$("#b2").show();
 				$.post("aj_getreco.php", {type:"movies"}, function(data){
 					console.log(data);
+					if (data == "[]") {
+						alert ("Please add a few more movies to the basket");
+					}
 					datar = JSON.parse(data);
 					out = '';
 					$.each(datar, function(i, item) {
@@ -151,6 +165,18 @@
 				$("#b4").show();
 				$.post("aj_getreco.php", {type:"actor"}, function(data){
 					console.log(data);
+					if (data == "[]") {
+						alert ("Please add a few more actors to the basket");
+					}					
+					datar = JSON.parse(data);
+					out = '';
+					$.each(datar, function(i, item) {
+					    out += '<div><div style="width: 160px; margin-bottom: 5px; float:left; cursor: pointer;" class="movieBox" id="item-'+item.itemid+'">' + item.movie + '</div>';
+						out += '<div style="width: 65px; float: right;">Score: ' + item.score + '</div>';
+					    out += '<div style="clear: both"></div></div>';
+
+					});
+					$("#b4data").html(out);
 					$("#b4").hide();
 				});
 			});	

@@ -1,0 +1,11 @@
+uploads/*
+*.apk
+
+main-config.php
+.htaccess
+cache/*
+cache/
+cache
+*_log
+
+static/images/*
