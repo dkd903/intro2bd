@@ -20,8 +20,8 @@
         $score = array();
         foreach($preferences as $otherPerson=>$values){
             if($otherPerson !== $person){
-                $sim = similarityDistance($preferences, $person, $otherPerson);
-                if($sim > 0)
+                $distmeasure = similarityDistance($preferences, $person, $otherPerson);
+                if($distmeasure > 0)
                     $score[$otherPerson] = $sim;
             }
         }
@@ -45,24 +45,24 @@
         $total = array();
         $simSums = array();
         $ranks = array();
-        $sim = 0;
+        $distmeasure = 0;
         
         foreach($preferences as $otherPerson=>$values) {
             if($otherPerson != $person) {
-                $sim = similarityDistance($preferences, $person, $otherPerson);
+                $distmeasure = similarityDistance($preferences, $person, $otherPerson);
             }
             
-            if($sim > 0) {
+            if($distmeasure > 0) {
                 foreach($preferences[$otherPerson] as $key=>$value) {
                     if(!array_key_exists($key, $preferences[$person])) {
                         if(!array_key_exists($key, $total)) {
                             $total[$key] = 0;
                         }
-                        $total[$key] += $preferences[$otherPerson][$key] * $sim;
+                        $total[$key] += $preferences[$otherPerson][$key] * $distmeasure;
                         if(!array_key_exists($key, $simSums)) {
                             $simSums[$key] = 0;
                         }
-                        $simSums[$key] += $sim;
+                        $simSums[$key] += $distmeasure;
                     }
                 }
                 
