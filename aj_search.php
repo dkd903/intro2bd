@@ -4,7 +4,9 @@ $term = trim(strip_tags($_GET['term']));//retrieve the search term that autocomp
 
 if ($_GET["datasource"] == "movie") {
 
-	$qstring = "SELECT title,id,production_year FROM title WHERE title LIKE '%".$term."%' AND production_year != '' ORDER BY production_year DESC";
+	$qstring = "SELECT title,id,production_year FROM title WHERE title LIKE '%".$term."%' 
+		AND production_year != '' AND kind_id = 1 AND production_year <=2014 
+		ORDER BY production_year DESC";
 	$result = mysql_query($qstring);//query the database for entries containing the term
 
 	while ($row = mysql_fetch_array($result,MYSQL_ASSOC))//loop through the retrieved values

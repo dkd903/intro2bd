@@ -1,26 +1,26 @@
 <?php
-    function similarityDistance($preferences, $person1, $person2) {
+    function simil_dist($movies_user_ratings, $person1, $person2) {
         $similar = array();
         $sum = 0;
-        foreach($preferences[$person1] as $key=>$value){
-            if(array_key_exists($key, $preferences[$person2]))
+        foreach($movies_user_ratings[$person1] as $key=>$value){
+            if(array_key_exists($key, $movies_user_ratings[$person2]))
                 $similar[$key] = 1;
         }
         if(count($similar) == 0)
             return 0;
-        foreach($preferences[$person1] as $key=>$value){
-            if(array_key_exists($key, $preferences[$person2]))
-                $sum = $sum + pow($value - $preferences[$person2][$key], 2);
+        foreach($movies_user_ratings[$person1] as $key=>$value){
+            if(array_key_exists($key, $movies_user_ratings[$person2]))
+                $sum = $sum + pow($value - $movies_user_ratings[$person2][$key], 2);
         }
         return  1/(1 + sqrt($sum));     
     }
     
     
-    /*function matchItems($preferences, $person) {
+    /*function matchItems($movies_user_ratings, $person) {
         $score = array();
-        foreach($preferences as $otherPerson=>$values){
+        foreach($movies_user_ratings as $otherPerson=>$values){
             if($otherPerson !== $person){
-                $distmeasure = similarityDistance($preferences, $person, $otherPerson);
+                $distmeasure = similarityDistance($movies_user_ratings, $person, $otherPerson);
                 if($distmeasure > 0)
                     $score[$otherPerson] = $sim;
             }
@@ -30,9 +30,9 @@
     
     }
     
-    function transformPreferences($preferences) {
+    function transformPreferences($movies_user_ratings) {
         $result = array();
-        foreach($preferences as $otherPerson => $values){
+        foreach($movies_user_ratings as $otherPerson => $values){
             foreach($values as $key => $value){
                 $result[$key][$otherPerson] = $value;
             }
@@ -41,24 +41,24 @@
     }*/
     
     
-    function getRecommendations($preferences, $person) {
+    function generate_reco($movies_user_ratings, $person) {
         $total = array();
         $simSums = array();
         $ranks = array();
         $distmeasure = 0;
         
-        foreach($preferences as $otherPerson=>$values) {
+        foreach($movies_user_ratings as $otherPerson=>$values) {
             if($otherPerson != $person) {
-                $distmeasure = similarityDistance($preferences, $person, $otherPerson);
+                $distmeasure = simil_dist($movies_user_ratings, $person, $otherPerson);
             }
             
             if($distmeasure > 0) {
-                foreach($preferences[$otherPerson] as $key=>$value) {
-                    if(!array_key_exists($key, $preferences[$person])) {
+                foreach($movies_user_ratings[$otherPerson] as $key=>$value) {
+                    if(!array_key_exists($key, $movies_user_ratings[$person])) {
                         if(!array_key_exists($key, $total)) {
                             $total[$key] = 0;
                         }
-                        $total[$key] += $preferences[$otherPerson][$key] * $distmeasure;
+                        $total[$key] += $movies_user_ratings[$otherPerson][$key] * $distmeasure;
                         if(!array_key_exists($key, $simSums)) {
                             $simSums[$key] = 0;
                         }

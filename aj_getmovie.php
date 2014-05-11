@@ -45,7 +45,7 @@ if ($r) {
 
 //cast info
 
-$q = "SELECT name.name, name.gender, role_type.role FROM name 
+$q = "SELECT name.id, name.name, name.gender, role_type.role FROM name 
 				INNER JOIN cast_info ON cast_info.person_id = name.id 
 				INNER JOIN role_type ON cast_info.role_id = role_type.id 
 				WHERE cast_info.movie_id = ". $id;
@@ -59,7 +59,7 @@ if ($r) {
 
 	while ($row = mysql_fetch_array($r)) {
 
-			$actor[] = array("name" => $row["name"], "gender" => $row["gender"], "role" => $row["role"]);
+			$actor[] = array("pid" => $row["id"], "name" => $row["name"], "gender" => $row["gender"], "role" => $row["role"]);
 	}
 
 	$dataSaved["actors"] = $actor;

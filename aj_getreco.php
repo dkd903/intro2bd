@@ -33,7 +33,7 @@ foreach ($films as $key=>$value) {
 	}
 	$nfilms[$key] = $temp;
 }
-$recommendations = getRecommendations($nfilms, $_COOKIE["email"]);
+$recommendations = generate_reco($nfilms, $_COOKIE["email"]);
 
 $finalReturn = array();
 
