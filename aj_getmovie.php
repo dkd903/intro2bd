@@ -60,9 +60,13 @@ if ($r) {
 	while ($row = mysql_fetch_array($r)) {
 
 			$actor[] = array("pid" => $row["id"], "name" => $row["name"], "gender" => $row["gender"], "role" => $row["role"]);
+			if($row["role"] == "director") {
+				$dataSaved["director"] = $row["name"];
+			}
 	}
 
 	$dataSaved["actors"] = $actor;
+	$dataSaved["crewcount"] = count($actor);
 
 } else {
 	echo mysql_error();
@@ -98,6 +102,7 @@ if ($r) {
 	}
 
 	$dataSaved["genres"] = $genreInfo;
+	$dataSaved["genrescount"] = count($genreInfo);
 
 	//print_r($dataSaved);
 

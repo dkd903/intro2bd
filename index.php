@@ -83,6 +83,12 @@ width: 1100px;">
 			</div>
 
 			<div style="width: 250px; margin-right: 10px; border: 1px solid #D6D6D6; padding: 5px; margin-top: 10px; font-size: 12px;">
+				<span style="font-size: 16px;">MovieMax Index</span>
+				<br />			
+				<div id="mmIndex"><span style="font-size: 12px;">Select to movie to find our verdict</span></div>
+			</div>	
+
+			<div style="width: 250px; margin-right: 10px; border: 1px solid #D6D6D6; padding: 5px; margin-top: 10px; font-size: 12px;">
 				<span style="font-size: 16px;">Users</span>
 				<br />			
 				<?php
@@ -129,7 +135,7 @@ width: 1100px;">
 
 			$( "#movieName" ).autocomplete({
 			  source: "aj_search.php?datasource=movie",
-			  minLength: 4,
+			  minLength: 3,
 			  change: function( event, ui ) {
 				$("#movieTyped").val(this.value);
 			  },
@@ -142,7 +148,7 @@ width: 1100px;">
 
 			$( "#actorName" ).autocomplete({
 			  source: "aj_search.php?datasource=actor",
-			  minLength: 4,
+			  minLength: 3,
 			  change: function( event, ui ) {
 				$("#actorTyped").val(this.value);
 			  },
@@ -309,6 +315,25 @@ width: 1100px;">
 
 					$("#movieInfo").html(out);
 					$("#movieInfo").show();
+
+					$.post("aj_classify.php", {id:itemid}, function(data){
+
+						var out = "<h1>" + data + "</h1>";
+						if (data == "1") {
+							out += "Watch trailer first";
+						} else if (data == "2") {
+							out += "Give it a miss";
+						} else if (data == "3") {
+							out += "May or may not watch";
+						} else if (data == "4") {
+							out += "Evergreen";
+						} else if (data == "5") {
+							out += "Must watch";
+						}
+						$("#mmIndex").html(out);
+
+					});
+
 				});				
 		}
 
