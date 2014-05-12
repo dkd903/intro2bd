@@ -14,5 +14,5 @@
                 $sum = $sum + pow($value - $movies_user_ratings[$pointb][$key], 2);
             }
         }
-        return  sqrt($sum);     
+        return  (1+sqrt($sum));     
     }

@@ -46,7 +46,7 @@ $person = $_COOKIE["email"];
 foreach($movies_user_ratings as $eachuSer=>$values) {
     if($eachuSer != $person) {
         $distmeasure = simil_dist($movies_user_ratings, $person, $eachuSer);
-        $distmeasure = 1/(1 + $distmeasure);
+        $distmeasure = 1/$distmeasure;
     }
     
     if($distmeasure > 0) {
