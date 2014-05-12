@@ -8,6 +8,7 @@
         foreach($movies_user_ratings as $eachuSer=>$values) {
             if($eachuSer != $person) {
                 $distmeasure = simil_dist($movies_user_ratings, $person, $eachuSer);
+                $distmeasure = 1/(1 + $distmeasure);
             }
             
             if($distmeasure > 0) {
@@ -32,7 +33,7 @@
         array_multisort($iranks, SORT_DESC);    
         return $iranks;
     }
-    
+
     function simil_dist($movies_user_ratings, $pointa, $pointb) {
         $similar = array();
         $sum = 0;
@@ -43,33 +44,9 @@
         if(count($similar) == 0)
             return 0;
         foreach($movies_user_ratings[$pointa] as $key=>$value){
-            if(array_key_exists($key, $movies_user_ratings[$pointb]))
+            if(array_key_exists($key, $movies_user_ratings[$pointb])) {
                 $sum = $sum + pow($value - $movies_user_ratings[$pointb][$key], 2);
-        }
-        return  1/(1 + sqrt($sum));     
-    }
-    
-    
-    /*function matchItems($movies_user_ratings, $person) {
-        $score = array();
-        foreach($movies_user_ratings as $eachuSer=>$values){
-            if($eachuSer !== $person){
-                $distmeasure = similarityDistance($movies_user_ratings, $person, $eachuSer);
-                if($distmeasure > 0)
-                    $score[$eachuSer] = $sim;
             }
         }
-        array_multisort($score, SORT_DESC);
-        return $score;
-    
+        return  sqrt($sum);     
     }
-    
-    function transformPreferences($movies_user_ratings) {
-        $result = array();
-        foreach($movies_user_ratings as $eachuSer => $values){
-            foreach($values as $key => $value){
-                $result[$key][$eachuSer] = $value;
-            }
-        }
-        return $result;
-    }*/
