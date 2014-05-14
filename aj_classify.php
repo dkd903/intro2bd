@@ -27,7 +27,7 @@ if (file_exists("cache/".$total_class_countacheName)) {
 $director = explode(",", $dataf["director"]);
 $budget = str_replace(" ","",str_replace("CAD","",str_replace("INR","",str_replace("$","",str_replace(",","",$dataf["budget"])))));
 
-$test_data = array('budget'=>'20000000','genres'=>$dataf["genrescount"],'director'=>$director[1]." ".$director[0],'crewcount'=>$dataf["crewcount"]);
+$test_data = array('budget'=>$budget,'genres'=>$dataf["genrescount"],'director'=>$director[1]." ".$director[0],'crewcount'=>$dataf["crewcount"]);
 
 
 $all_class_labels = array();//all the classes
