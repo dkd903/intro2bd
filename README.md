@@ -16,3 +16,5 @@ httpdocs folder of your apache installation
 Debjit - PHP app, Javascript, caching, classification, recommendation algo implementation
 Tejas - Java Part, Android, data cleaning
 Sushant, Ashish - Database design, data population, data cleaning
+
+PS: There is zero security built in this project like input-sanitisation etc.
